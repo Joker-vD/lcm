@@ -1,0 +1,66 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>LCM calculator</title>
+    <script type="text/javascript">
+        "use strict";
+
+        let gcd = (a, b) => {
+            if (!isFinite(a) || !isFinite(b)) return Number.NaN;
+            if (a < 0) a = -a;
+            if (b < 0) b = -b;
+
+            [a, b] = [Math.min(a, b), Math.max(a, b)];
+            console.log(a, b);
+
+            while (a != 0) {
+                [a, b] = [b % a, a];
+                console.log(a, b);
+            }
+
+            return b;
+        }
+
+
+        let recalc = () => {
+            let a = inA.valueAsNumber;
+            let b = inB.valueAsNumber;
+            let lcm = a * b / gcd(a, b);
+            console.log(lcm)
+            if (Number.isFinite(lcm)) {
+                textLCM.innerText = lcm;
+                textMulA.innerText = lcm / a;
+                textMulB.innerText = lcm / b;
+            } else {
+                textLCM.innerText = '—';
+                textMulA.innerText = '—';
+                textMulB.innerText = '—';
+            }
+        }
+    </script>
+    <style>
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    height: 95vh;
+}
+    </style>
+</head>
+<body>
+    <div class="center-screen"><div>
+        <label for="inA">Number #1:</label>
+        <input id="inA" type="number" onchange="recalc()">
+        <br>
+        <label for="inB">Number #2:</label>
+        <input id="inB" type="number" onchange="recalc()">
+        <br>
+        LCM is <span id="textLCM">—</span>
+        <br>
+        Multiplier for number #1 is <span id="textMulA">—</span>
+        <br>
+        Multiplier for number #2 is <span id="textMulB">—</span>
+    </div></div>
+</body>
+</html>
