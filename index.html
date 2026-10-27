@@ -26,11 +26,11 @@
             let a = inA.valueAsNumber;
             let b = inB.valueAsNumber;
             let lcm = a * b / gcd(a, b);
-            if (Number.isFinite(lcm) || (how == "force")) {
+            if (Number.isFinite(lcm)) {
                 textLCM.innerText = lcm;
                 textMulA.innerText = lcm / a;
                 textMulB.innerText = lcm / b;
-            } else {
+            } else if (how == "force") {
                 textLCM.innerText = "—";
                 textMulA.innerText = "—";
                 textMulB.innerText = "—";
