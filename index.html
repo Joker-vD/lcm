@@ -5,6 +5,16 @@
     <script type="text/javascript">
         "use strict";
 
+        let setResultText = (element, text) => {
+            if (text === undefined) {
+                element.innerText = "—";
+                element.classList.replace("selectable", "unselectable");
+            } else {
+                element.innerText = text;
+                element.classList.replace("unselectable", "selectable");
+            }
+        }
+
         let gcd = (a, b) => {
             if (!isFinite(a) || !isFinite(b)) return Number.NaN;
             if (a < 0) a = -a;
@@ -25,39 +35,65 @@
             let b = inB.valueAsNumber;
             let lcm = a * b / gcd(a, b);
             if (Number.isFinite(lcm)) {
-                textLCM.innerText = lcm;
-                textMulA.innerText = lcm / a;
-                textMulB.innerText = lcm / b;
+                setResultText(textLCM, lcm);
+                setResultText(textMulA, lcm / a);
+                setResultText(textMulB, lcm / b);
             } else if (how == "force") {
-                textLCM.innerText = "—";
-                textMulA.innerText = "—";
-                textMulB.innerText = "—";
+                setResultText(textLCM);
+                setResultText(textMulA);
+                setResultText(textMulB);
             }
         }
     </script>
     <style>
+
+body {
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+input {
+    font-size: 16px;
+}
+
 .center-screen {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: left;
     height: 95vh;
+}
+
+.align-left {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 20px;
+}
+
+.unselectable {
+    user-select: none;
+}
+
+.selectable {
+    user-select: all;
+    font-size: 18px;
+    font-weight: bold;
 }
     </style>
 </head>
-<body>
-    <div class="center-screen"><div>
-        <label for="inA">Number #1:</label>
-        <input id="inA" type="number" oninput="recalc()" onchange="recalc('force')">
-        <br>
-        <label for="inB">Number #2:</label>
-        <input id="inB" type="number" oninput="recalc()" onchange="recalc('force')">
-        <br>
-        LCM is <span id="textLCM">—</span>
-        <br>
-        Multiplier for number #1 is <span id="textMulA">—</span>
-        <br>
-        Multiplier for number #2 is <span id="textMulB">—</span>
-    </div></div>
+<body class="center-screen">
+    <div class="align-left">
+        <div>
+            <label for="inA" class="unselectable">Number #1:</label>
+            <input id="inA" type="number" oninput="recalc()" onchange="recalc('force')">
+        </div>
+        <div>
+            <label for="inB" class="unselectable">Number #2:</label>
+            <input id="inB" type="number" oninput="recalc()" onchange="recalc('force')">
+        </div>
+        <span class="unselectable">LCM is <span id="textLCM" class="unselectable">—</span></span>
+        <span class="unselectable">Multiplier for number #1 is <span id="textMulA" class="unselectable">—</span></span>
+        <span class="unselectable">Multiplier for number #2 is <span id="textMulB" class="unselectable">—</span></span>
+    </div>
 </body>
 </html>
